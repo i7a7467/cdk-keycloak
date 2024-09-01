@@ -299,6 +299,13 @@ export interface KeyCloakProps {
    */
   readonly taskMemory?: number;
 
+  /**
+   * The master username for the database
+   *
+   * @default admin
+   */
+  readonly masterUserName?: string;
+
 }
 
 export class KeyCloak extends Construct {
@@ -332,6 +339,7 @@ export class KeyCloak extends Construct {
       maxCapacity: props.databaseMaxCapacity,
       minCapacity: props.databaseMinCapacity,
       removalPolicy: props.databaseRemovalPolicy,
+      masterUserName: props.masterUserName,
     });
     const keycloakContainerService = this.addKeyCloakContainerService({
       database: this.db,
@@ -447,6 +455,14 @@ export interface DatabaseProps {
    * @default RemovalPolicy.RETAIN
    */
   readonly removalPolicy?: cdk.RemovalPolicy;
+
+  /**
+   * The master username for the database
+   *
+   * @default admin
+   */
+  readonly masterUserName?: string;
+
 }
 
 /**
@@ -517,7 +533,7 @@ export class Database extends Construct {
       }),
       storageEncrypted: true,
       backupRetention: props.backupRetention ?? cdk.Duration.days(7),
-      credentials: rds.Credentials.fromGeneratedSecret('admin'),
+      credentials: rds.Credentials.fromGeneratedSecret(props.masterUserName ?? 'admin'),
       instanceType: props.instanceType ?? new ec2.InstanceType('r5.large'),
       parameterGroup: rds.ParameterGroup.fromParameterGroupName(this, 'ParameterGroup', 'default.mysql8.0'),
       deletionProtection: true,
@@ -542,7 +558,7 @@ export class Database extends Construct {
       }),
       defaultDatabaseName: 'keycloak',
       deletionProtection: true,
-      credentials: rds.Credentials.fromGeneratedSecret('admin'),
+      credentials: rds.Credentials.fromGeneratedSecret(props.masterUserName ?? 'admin'),
       vpc: props.vpc,
       vpcSubnets: props.databaseSubnets,
       writer: rds.ClusterInstance.provisioned('Writer', {
@@ -575,7 +591,7 @@ export class Database extends Construct {
       vpc: props.vpc,
       defaultDatabaseName: 'keycloak',
       vpcSubnets: props.databaseSubnets,
-      credentials: rds.Credentials.fromGeneratedSecret('admin'),
+      credentials: rds.Credentials.fromGeneratedSecret(props.masterUserName ?? 'admin'),
       backupRetention: props.backupRetention ?? cdk.Duration.days(7),
       deletionProtection: true,
       removalPolicy: props.removalPolicy ?? cdk.RemovalPolicy.RETAIN,
@@ -601,7 +617,7 @@ export class Database extends Construct {
       }),
       defaultDatabaseName: 'keycloak',
       deletionProtection: true,
-      credentials: rds.Credentials.fromGeneratedSecret('admin'),
+      credentials: rds.Credentials.fromGeneratedSecret(props.masterUserName ?? 'admin'),
       vpc: props.vpc,
       vpcSubnets: props.databaseSubnets,
       writer: rds.ClusterInstance.provisioned('Writer', {

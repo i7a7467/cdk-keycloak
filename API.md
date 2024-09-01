@@ -103,7 +103,7 @@ new Database(scope: Construct, id: string, props: DatabaseProps)
   * **minCapacity** (<code>number</code>)  The minimum number of Aurora Serverless V2 capacity units. __*Default*__: 0.5
   * **removalPolicy** (<code>[RemovalPolicy](#aws-cdk-lib-removalpolicy)</code>)  Controls what happens to the database if it stops being managed by CloudFormation. __*Default*__: RemovalPolicy.RETAIN
   * **singleDbInstance** (<code>boolean</code>)  Whether to use single RDS instance rather than RDS cluster. __*Default*__: false
-
+  * **masterUserName** (<code>string</code>) The database master username. When using this, env.DB_USER/env.KC_DB_USERNAME must also be set. __*Default*__: admin
 
 
 ### Properties
@@ -164,7 +164,7 @@ new KeyCloak(scope: Construct, id: string, props: KeyCloakProps)
   * **taskCpu** (<code>number</code>)  The number of cpu units used by the keycloak task. __*Default*__: 4096
   * **taskMemory** (<code>number</code>)  The amount (in MiB) of memory used by the keycloak task. __*Default*__: 8192
   * **vpc** (<code>[aws_ec2.IVpc](#aws-cdk-lib-aws-ec2-ivpc)</code>)  VPC for the workload. __*Optional*__
-
+  * **masterUserName** (<code>string</code>) The database master username. __*Default*__: admin
 
 
 ### Properties
@@ -201,6 +201,7 @@ addDatabase(props: DatabaseProps): Database
   * **minCapacity** (<code>number</code>)  The minimum number of Aurora Serverless V2 capacity units. __*Default*__: 0.5
   * **removalPolicy** (<code>[RemovalPolicy](#aws-cdk-lib-removalpolicy)</code>)  Controls what happens to the database if it stops being managed by CloudFormation. __*Default*__: RemovalPolicy.RETAIN
   * **singleDbInstance** (<code>boolean</code>)  Whether to use single RDS instance rather than RDS cluster. __*Default*__: false
+  * **masterUserName** (<code>string</code>) The database master username. __*Default*__: admin
 
 __Returns__:
 * <code>[Database](#cdk-keycloak-database)</code>
@@ -363,6 +364,7 @@ Name | Type | Description
 **minCapacity**? | <code>number</code> | The minimum number of Aurora Serverless V2 capacity units.<br/>__*Default*__: 0.5
 **removalPolicy**? | <code>[RemovalPolicy](#aws-cdk-lib-removalpolicy)</code> | Controls what happens to the database if it stops being managed by CloudFormation.<br/>__*Default*__: RemovalPolicy.RETAIN
 **singleDbInstance**? | <code>boolean</code> | Whether to use single RDS instance rather than RDS cluster.<br/>__*Default*__: false
+**masterUserName** (<code>string</code>) The database master username. __*Default*__: admin
 
 
 
@@ -401,6 +403,6 @@ Name | Type | Description
 **taskCpu**? | <code>number</code> | The number of cpu units used by the keycloak task.<br/>__*Default*__: 4096
 **taskMemory**? | <code>number</code> | The amount (in MiB) of memory used by the keycloak task.<br/>__*Default*__: 8192
 **vpc**? | <code>[aws_ec2.IVpc](#aws-cdk-lib-aws-ec2-ivpc)</code> | VPC for the workload.<br/>__*Optional*__
-
+**masterUserName** (<code>string</code>) The database master username. When using this, env.DB_USER/env.KC_DB_USERNAME must also be set. __*Default*__: admin
 
 
