@@ -306,6 +306,13 @@ export interface KeyCloakProps {
    */
   readonly masterUserName?: string;
 
+  /**
+   * The port number for access to database server
+   *
+   * @default 3306
+   */
+  readonly databasePort?: number;  
+
 }
 
 export class KeyCloak extends Construct {
@@ -340,6 +347,7 @@ export class KeyCloak extends Construct {
       minCapacity: props.databaseMinCapacity,
       removalPolicy: props.databaseRemovalPolicy,
       masterUserName: props.masterUserName,
+      databasePort: props.databasePort,
     });
     const keycloakContainerService = this.addKeyCloakContainerService({
       database: this.db,
@@ -463,6 +471,12 @@ export interface DatabaseProps {
    */
   readonly masterUserName?: string;
 
+  /**
+   * The port number for access to database server
+   *
+   * @default 3306
+   */
+  readonly databasePort?: number;
 }
 
 /**
@@ -513,9 +527,9 @@ export class Database extends Construct {
     }
     this.secret = config.secret;
     // allow internally from the same security group
-    config.connections.allowInternally(ec2.Port.tcp(this._mysqlListenerPort));
+    config.connections.allowInternally(ec2.Port.tcp(props.databasePort ?? this._mysqlListenerPort));
     // allow from the whole vpc cidr
-    config.connections.allowFrom(ec2.Peer.ipv4(props.vpc.vpcCidrBlock), ec2.Port.tcp(this._mysqlListenerPort));
+    config.connections.allowFrom(ec2.Peer.ipv4(props.vpc.vpcCidrBlock), ec2.Port.tcp(props.databasePort ?? this._mysqlListenerPort));
     this.clusterEndpointHostname = config.endpoint;
     this.clusterIdentifier = config.identifier;
     this.connections = config.connections;

@@ -104,7 +104,7 @@ new Database(scope: Construct, id: string, props: DatabaseProps)
   * **removalPolicy** (<code>[RemovalPolicy](#aws-cdk-lib-removalpolicy)</code>)  Controls what happens to the database if it stops being managed by CloudFormation. __*Default*__: RemovalPolicy.RETAIN
   * **singleDbInstance** (<code>boolean</code>)  Whether to use single RDS instance rather than RDS cluster. __*Default*__: false
   * **masterUserName** (<code>string</code>) The database master username. When using this, env.DB_USER/env.KC_DB_USERNAME must also be set. __*Default*__: admin
-
+  * **databasePort** (<code>number</code>) The database server listening port number. When using this, env.DB_PORT/env.KC_DB_URL_PORT must also be set. __*Default*__: 3306
 
 ### Properties
 
@@ -165,7 +165,7 @@ new KeyCloak(scope: Construct, id: string, props: KeyCloakProps)
   * **taskMemory** (<code>number</code>)  The amount (in MiB) of memory used by the keycloak task. __*Default*__: 8192
   * **vpc** (<code>[aws_ec2.IVpc](#aws-cdk-lib-aws-ec2-ivpc)</code>)  VPC for the workload. __*Optional*__
   * **masterUserName** (<code>string</code>) The database master username. __*Default*__: admin
-
+  * **databasePort** (<code>number</code>) The database server listening port number. When using this, env.DB_PORT/env.KC_DB_URL_PORT must also be set. __*Default*__: 3306
 
 ### Properties
 
@@ -202,6 +202,7 @@ addDatabase(props: DatabaseProps): Database
   * **removalPolicy** (<code>[RemovalPolicy](#aws-cdk-lib-removalpolicy)</code>)  Controls what happens to the database if it stops being managed by CloudFormation. __*Default*__: RemovalPolicy.RETAIN
   * **singleDbInstance** (<code>boolean</code>)  Whether to use single RDS instance rather than RDS cluster. __*Default*__: false
   * **masterUserName** (<code>string</code>) The database master username. __*Default*__: admin
+  * **databasePort** (<code>number</code>) The database server listening port number. When using this, env.DB_PORT/env.KC_DB_URL_PORT must also be set. __*Default*__: 3306
 
 __Returns__:
 * <code>[Database](#cdk-keycloak-database)</code>
@@ -365,7 +366,7 @@ Name | Type | Description
 **removalPolicy**? | <code>[RemovalPolicy](#aws-cdk-lib-removalpolicy)</code> | Controls what happens to the database if it stops being managed by CloudFormation.<br/>__*Default*__: RemovalPolicy.RETAIN
 **singleDbInstance**? | <code>boolean</code> | Whether to use single RDS instance rather than RDS cluster.<br/>__*Default*__: false
 **masterUserName** (<code>string</code>) The database master username. __*Default*__: admin
-
+**databasePort** (<code>number</code>) The database server listening port number. When using this, env.DB_PORT/env.KC_DB_URL_PORT must also be set. __*Default*__: 3306
 
 
 ## struct KeyCloakProps  <a id="cdk-keycloak-keycloakprops"></a>
@@ -404,5 +405,5 @@ Name | Type | Description
 **taskMemory**? | <code>number</code> | The amount (in MiB) of memory used by the keycloak task.<br/>__*Default*__: 8192
 **vpc**? | <code>[aws_ec2.IVpc](#aws-cdk-lib-aws-ec2-ivpc)</code> | VPC for the workload.<br/>__*Optional*__
 **masterUserName** (<code>string</code>) The database master username. When using this, env.DB_USER/env.KC_DB_USERNAME must also be set. __*Default*__: admin
-
+**databasePort** (<code>number</code>) The database server listening port number. When using this, env.DB_PORT/env.KC_DB_URL_PORT must also be set. __*Default*__: 3306
 
